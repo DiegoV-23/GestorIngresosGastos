@@ -1,0 +1,124 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Crear Cuenta - Gestor de Ingresos y Gastos</title>
+
+    <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://googleapis.com" rel="stylesheet" />
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet" />
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .split-container {
+            min-height: 100vh;
+        }
+
+        .left-panel {
+            background: linear-gradient(135deg, #2b39c8 0%, #1d289e 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5rem 6rem; 
+        }
+
+        .right-panel {
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 5rem; 
+        }
+
+        .form-wrapper {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto; 
+        }
+
+        .btn-dark-custom {
+            background-color: #18181b;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem;
+            font-weight: 700;
+            border-radius: 6px;
+        }
+
+            .btn-dark-custom:hover {
+                background-color: #27272a;
+                color: #ffffff;
+            }
+    </style>
+
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <div class="row no-gutters split-container">
+            <!-- Panel Izquierdo Azul -->
+            <div class="col-lg-6 d-none d-lg-flex left-panel">
+                <div class="mb-4">
+                    <i class="fas fa-wallet fa-3x"></i>
+                </div>
+                <h1 class="display-4 font-weight-bold mb-3">Empieza hoy,<br />GestorFinanzas</h1>
+                <p class="lead" style="opacity: 0.85; max-width: 440px;">
+                    Crea tu perfil en segundos y lleva el registro detallado de todas tus finanzas personales.
+                </p>
+            </div>
+
+            <!-- Panel Derecho Formulario -->
+            <div class="col-lg-6 right-panel">
+                <div class="form-wrapper">
+                    <h5 class="font-weight-bold text-dark mb-5">
+                        <i class="fas fa-wallet text-primary mr-2"></i>GestorFinanzas
+                    </h5>
+
+                    <h2 class="font-weight-bold text-dark mb-2">Crea tu cuenta</h2>
+                    <p class="text-muted small mb-4">
+                        ¿Ya tienes una cuenta?
+                        <a asp-controller="Auth" asp-action="Login" class="font-weight-bold text-dark" style="text-decoration: underline;">
+                            Inicia sesión aquí
+                        </a>.
+                    </p>
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger small">@ViewBag.Error</div>
+                    }
+
+                    <form asp-controller="Auth" asp-action="Register" method="post">
+                        <div class="form-group mb-3">
+                            <input type="text" name="Nombre" class="form-control py-4"
+                                   placeholder="Nombre completo" required />
+                        </div>
+                        <div class="form-group mb-3">
+                            <input type="email" name="Correo" class="form-control py-4"
+                                   placeholder="Correo electrónico" required />
+                        </div>
+                        <div class="form-group mb-4">
+                            <input type="password" name="Password" class="form-control py-4"
+                                   placeholder="Contraseña" required />
+                        </div>
+                        <button type="submit" class="btn btn-dark-custom btn-block">
+                            Registrar Cuenta
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
