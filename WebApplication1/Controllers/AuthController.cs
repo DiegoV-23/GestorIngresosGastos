@@ -26,8 +26,10 @@ namespace GestorIngresosGastos.Controllers
                 return View();
             }
 
+            HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
             HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre);
             return RedirectToAction("Index", "Home");
+            
         }
 
         [HttpGet]
