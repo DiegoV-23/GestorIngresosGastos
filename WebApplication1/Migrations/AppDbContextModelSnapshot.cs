@@ -63,6 +63,52 @@ namespace GestorIngresosGastos.Migrations
                         });
                 });
 
+            modelBuilder.Entity("GestorIngresosGastos.Models.Ingreso", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Fuente")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Monto")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TipoIngreso")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Ingresos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descripcion = "Salario Mensual",
+                            Fecha = new DateTime(2026, 11, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fuente = "Empleo Principal",
+                            Monto = 35000m,
+                            TipoIngreso = "Activo",
+                            UsuarioId = 1
+                        });
+                });
+
             modelBuilder.Entity("GestorIngresosGastos.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -96,6 +142,17 @@ namespace GestorIngresosGastos.Migrations
                 });
 
             modelBuilder.Entity("GestorIngresosGastos.Models.Gasto", b =>
+                {
+                    b.HasOne("GestorIngresosGastos.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("GestorIngresosGastos.Models.Ingreso", b =>
                 {
                     b.HasOne("GestorIngresosGastos.Models.Usuario", "Usuario")
                         .WithMany()
