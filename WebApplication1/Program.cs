@@ -13,7 +13,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Inyección de dependencias (Interface -> Service)
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
-
+builder.Services.AddScoped<IGastoService, GastoService>();
 
 // Sesiones para mantener al usuario autenticado
 builder.Services.AddSession();
