@@ -1,25 +1,28 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using WebApplication1.Models;
+using GestorIngresosGastos.Services;
 
-namespace WebApplication1.Controllers
+namespace GestorIngresosGastos.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IDashboardService _dashboardService;
+
+        public HomeController(IDashboardService dashboardService)
         {
-            return View();
+            _dashboardService = dashboardService;
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            var usuario = HttpContext.Session.GetString("UsuarioNombre");
+            if (string.IsNullOrEmpty(usuario))
+            {
+                return RedirectToAction("Login", "Auth");
+            }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            ViewBag.UsuarioNombre = usuario;
+            var resumen = await _dashboardService.ObtenerResumenFinancieroAsync();
+            return View(resumen);
         }
     }
 }
