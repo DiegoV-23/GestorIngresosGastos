@@ -4,6 +4,6 @@ namespace GestorIngresosGastos.Services
 {
     public interface IDashboardService
     {
-        Task<DashboardViewModel> ObtenerResumenFinancieroAsync();
+        Task<DashboardViewModel> ObtenerResumenFinancieroAsync(int usuarioId);
     }
 }

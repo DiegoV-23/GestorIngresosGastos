@@ -14,14 +14,16 @@ namespace GestorIngresosGastos.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var usuario = HttpContext.Session.GetString("UsuarioNombre");
-            if (string.IsNullOrEmpty(usuario))
+            var usuarioId = HttpContext.Session.GetInt32("UsuarioId");
+            var usuarioNombre = HttpContext.Session.GetString("UsuarioNombre");
+
+            if (usuarioId == null || string.IsNullOrEmpty(usuarioNombre))
             {
                 return RedirectToAction("Login", "Auth");
             }
 
-            ViewBag.UsuarioNombre = usuario;
-            var resumen = await _dashboardService.ObtenerResumenFinancieroAsync();
+            ViewBag.UsuarioNombre = usuarioNombre;
+            var resumen = await _dashboardService.ObtenerResumenFinancieroAsync(usuarioId.Value);
             return View(resumen);
         }
     }
