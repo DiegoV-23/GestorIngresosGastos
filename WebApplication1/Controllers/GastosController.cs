@@ -37,8 +37,15 @@ namespace GestorIngresosGastos.Controllers
             var usuarioId = ObtenerUsuarioId();
             if (usuarioId == null) return RedirectToAction("Login", "Auth");
 
+            if (gasto.Monto <= 0)
+            {
+                ViewBag.Error = "El monto del gasto debe ser mayor a RD$ 0.00.";
+                return View(gasto);
+            }
+
             gasto.UsuarioId = usuarioId.Value;
             await _gastoService.CrearAsync(gasto);
+            TempData["MensajeExito"] = "Gasto registrado correctamente.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -49,7 +56,7 @@ namespace GestorIngresosGastos.Controllers
             if (usuarioId == null) return RedirectToAction("Login", "Auth");
 
             var gasto = await _gastoService.ObtenerPorIdAsync(id, usuarioId.Value);
-            if (gasto == null) return NotFound();
+            if (gasto == null) return RedirectToAction(nameof(Index));
 
             return View(gasto);
         }
@@ -60,8 +67,15 @@ namespace GestorIngresosGastos.Controllers
             var usuarioId = ObtenerUsuarioId();
             if (usuarioId == null) return RedirectToAction("Login", "Auth");
 
+            if (gasto.Monto <= 0)
+            {
+                ViewBag.Error = "El monto del gasto debe ser mayor a RD$ 0.00.";
+                return View(gasto);
+            }
+
             gasto.UsuarioId = usuarioId.Value;
             await _gastoService.ActualizarAsync(gasto);
+            TempData["MensajeExito"] = "Gasto actualizado correctamente.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -72,6 +86,7 @@ namespace GestorIngresosGastos.Controllers
             if (usuarioId == null) return RedirectToAction("Login", "Auth");
 
             await _gastoService.EliminarAsync(id, usuarioId.Value);
+            TempData["MensajeExito"] = "Gasto eliminado correctamente.";
             return RedirectToAction(nameof(Index));
         }
     }
